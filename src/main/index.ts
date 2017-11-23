@@ -15,6 +15,8 @@ function createMainWindow() {
 
     window.loadURL(`file:///${__dirname}/../renderer/index.html`);
 
+    window.webContents.openDevTools();
+
     window.on('closed', () => {
         mainWindow = null;
     });
