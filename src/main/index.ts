@@ -5,6 +5,7 @@ import { app, BrowserWindow, globalShortcut } from 'electron';
 // Global reference to mainWindow
 // Necessary to prevent win from being garbage collected
 let mainWindow;
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 function createMainWindow() {
     // Construct new BrowserWindow
@@ -12,10 +13,17 @@ function createMainWindow() {
         title: 'Youtube Player',
         titleBarStyle: 'hidden'
     });
+    
+    const url = isDevelopment
+    ? `http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`
+    : `file://${__dirname}/index.html`;
 
-    window.loadURL(`file:///${__dirname}/../renderer/index.html`);
+    if (isDevelopment) {
+        window.webContents.openDevTools()
+    }
 
-    window.webContents.openDevTools();
+    window.loadURL(url)
+
 
     window.on('closed', () => {
         mainWindow = null;
@@ -98,4 +106,5 @@ try {
     registerBindings('mate', session);
 } catch (e) {
     // do nothing.
+    console.error(e);
 }
