@@ -1,6 +1,8 @@
 'use strict';
 
 import { app, BrowserWindow, globalShortcut } from 'electron';
+import { blockWindowAds } from 'electron-ad-blocker';
+
 
 // Global reference to mainWindow
 // Necessary to prevent win from being garbage collected
@@ -13,16 +15,17 @@ function createMainWindow() {
         title: 'Youtube Player',
         titleBarStyle: 'hidden'
     });
-    
+    blockWindowAds(window);
+
     const url = isDevelopment
     ? `http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`
     : `file://${__dirname}/index.html`;
 
     if (isDevelopment) {
-        window.webContents.openDevTools()
+        window.webContents.openDevTools();
     }
 
-    window.loadURL(url)
+    window.loadURL(url);
 
 
     window.on('closed', () => {
