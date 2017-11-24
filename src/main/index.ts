@@ -85,9 +85,9 @@ function registerBindings(desktopEnv, session) {
         if (!err) {
             iface.on('MediaPlayerKeyPressed', (_n, keyName) => {
                 switch (keyName) {
-                    case 'Next': sendCommand('MediaPlayPause'); return;
+                    case 'Play': sendCommand('MediaPlayPause'); return;
+                    case 'Next': sendCommand('MediaNextTrack'); return;
                     case 'Previous': sendCommand('MediaPreviousTrack'); return;
-                    case 'Play': sendCommand('MediaNextTrack'); return;
                     default: return;
                 }
             });
